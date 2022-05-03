@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  tools {
-    terraform 'Terraform'
-  }
     stages {
         stage('terraform init') {
             steps {
@@ -12,9 +9,9 @@ pipeline {
         stage('provision ec2') {
             steps {
                 echo "provisioning ec2"
-                sh 'terraform apply -auto-approve'
+                sh 'terraform apply --auto-approve'
             }
         }
     }
-  }
+ }
 
