@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+
+    stages {
+        stage('build app') {
+            steps {
+               script {
+                  echo 'building application jar...'
+                  sh 'mvn clean package'
+               }
+            }
+        }
+        stage('build image') {
+            steps {
+                script {
+                   echo 'building docker image...'
+                }
+            }
+        }
+        stage('deploy') {
+            steps {
+                script {
+                   echo 'deploying docker image to EC2...'
+                   def javaCmd = 'java -cp target/helloworld-1.0.jar com.coveros.demo.helloworld.HelloWorld'
+
+                   sshagent(['ec2-server-key']) {
+                       sh "ssh -o StrictHostKeyChecking=no ec2-user@54.167.16.220 ${javaCmd}"
+                   }
+                }
+            }
+        }
+    }
+}
