@@ -1,28 +1,20 @@
 pipeline {
   agent any
   tools {
-    maven 'Maven'
+    terraform 'Terraform'
   }
-
     stages {
-        stage('test') {
+        stage('terraform init') {
             steps {
-                echo "testing app"
-                sh 'mvn test'
+                sh 'terraform init'
             }
         }
-        stage('Build') {
+        stage('provision ec2') {
             steps {
-                echo "building image"
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo "Deploying the app"
-
+                echo "provisioning ec2"
+                sh 'terraform apply -auto-approve'
             }
         }
     }
- }
+  }
+
