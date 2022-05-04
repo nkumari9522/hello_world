@@ -24,10 +24,10 @@ pipeline {
             steps {
                 script {
                    echo 'deploying docker image to EC2...'
-                   def javaCmd = 'java -cp /var/lib/jenkins/workspace/Java-app/target/helloworld-1.1.jar ec2-user@54.167.16.220:/home/ec2-user'
+                   def javaCmd = 'java -cp /var/lib/jenkins/workspace/Java-app/target/helloworld-1.1.jar ec2-user@52.54.142.181:/home/ec2-user'
 
                    sshagent(['ec2-server-key']) {
-                       sh "ssh -o StrictHostKeyChecking=no ec2-user@54.167.16.220 ${javaCmd}"
+                       sh "ssh -o StrictHostKeyChecking=no ec2-user@52.54.142.181 ${javaCmd}"
                    }
                 }
             }
