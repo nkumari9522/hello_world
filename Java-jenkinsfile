@@ -27,7 +27,7 @@ pipeline {
                    def javaCmd = 'java -jar ./helloworld-1.1.jar ec2-user@52.54.142.181'
 
                    sshagent(['ec2-server-key']) {
-                       scp /var/lib/jenkins/workspace/Java-app/target/helloworld-1.1.jar ec2-user@52.54.142.181:/home/ec2-user
+                       sh "scp /var/lib/jenkins/workspace/Java-app/target/helloworld-1.1.jar ec2-user@52.54.142.181:/home/ec2-user"
                        sh "ssh -o StrictHostKeyChecking=no ec2-user@52.54.142.181 ${javaCmd}"
                    }
                 }
